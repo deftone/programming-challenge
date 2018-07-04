@@ -1,6 +1,6 @@
-package math;
+package de.exxcellent.challenge.math;
 
-import model.WeatherData;
+import de.exxcellent.challenge.model.WeatherData;
 import org.junit.Before;
 import org.junit.Test;
 

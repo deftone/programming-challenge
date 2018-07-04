@@ -58,7 +58,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>de.exxcellent.challenge.App</mainClass>
+                    <mainClass>de.exxcellent.challenge.main.App</mainClass>
                     <arguments>
                         <argument>foo</argument>
                     </arguments>

@@ -1,13 +1,13 @@
-package math;
+package de.exxcellent.challenge.math;
 
-import model.WeatherData;
+import de.exxcellent.challenge.model.WeatherData;
 
 import java.util.ArrayList;
 
 /**
  * Created by deftone on 04.07.18.
  * <p>
- * this class contains static functions to evaluate the data read from the file
+ * this class contains static functions to evaluate the data read from the de.exxcellent.challenge.file
  * for now, just highest and lowest difference of these two values, but could be more in the future :)
  */
 public class MathUtils {

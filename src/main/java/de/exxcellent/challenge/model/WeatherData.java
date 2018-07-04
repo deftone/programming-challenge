@@ -1,10 +1,8 @@
-package model;
-
+package de.exxcellent.challenge.model;
 
 /**
  * Created by deftone on 04.07.18.
  */
-
 public class WeatherData {
 
     private int day;
