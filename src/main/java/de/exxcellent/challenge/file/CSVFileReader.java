@@ -2,9 +2,11 @@ package de.exxcellent.challenge.file;
 
 import de.exxcellent.challenge.model.WeatherData;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by deftone on 04.07.18.
@@ -16,9 +18,9 @@ public class CSVFileReader {
     private int indexMax;
     private int indexMin;
 
-    public List<WeatherData> parseCsvFile(final String fileName, final String separator,
+    public ArrayList<WeatherData> parseCsvFile(final String fileName, final String separator,
                                           final String criterion, final String max, final String min) {
-        List<WeatherData> dataObjectsFromFile = new ArrayList<>();
+        ArrayList<WeatherData> dataObjectsFromFile = new ArrayList<>();
 
         //read file
         File file = new File(fileName);

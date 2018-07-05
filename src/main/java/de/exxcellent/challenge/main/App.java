@@ -1,8 +1,10 @@
 package de.exxcellent.challenge.main;
 
 import de.exxcellent.challenge.file.CSVFileReader;
+import de.exxcellent.challenge.math.MathUtils;
+import de.exxcellent.challenge.model.WeatherData;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by deftone on 04.07.18.
@@ -18,12 +20,19 @@ public class App {
     public static void main(String... args) {
 
         //Read data from the file
-        List<String> dateList = CSVFileReader.readFile(FILE_WEATHER, CSV_SEPERATOR);
+        CSVFileReader reader = new CSVFileReader();
+        ArrayList<WeatherData> weatherDataList = reader.parseCsvFile(FILE_WEATHER, CSV_SEPERATOR,
+                "Day", "MxT", "MnT");
 
-        String dayWithSmallestTempSpread = "Someday";     // Your day analysis function call …
+        //Determine day with lowest and highest temperature difference
+        String dayWithSmallestTempSpread = String.valueOf(MathUtils.findLowestDiff(weatherDataList));
+        String dayWithBiggestTempSpread = String.valueOf(MathUtils.findHighestDiff(weatherDataList));
+
+        //Determine best team
         String teamWithSmallesGoalSpread = "A good team"; // Your goal analysis function call …
 
         System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
+        System.out.printf("Day with biggest temperature spread  : %s%n", dayWithBiggestTempSpread);
         System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallesGoalSpread);
     }
 }
