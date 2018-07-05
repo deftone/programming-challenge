@@ -1,46 +1,62 @@
 package de.exxcellent.challenge.file;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import de.exxcellent.challenge.model.WeatherData;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by deftone on 04.07.18.
+ * <p>
+ * reads a csv file and returns a list of data objects
  */
 public class CSVFileReader {
-    //we don't want any instances of this class
-    private CSVFileReader() {
-    }
+    private int indexCriterion;
+    private int indexMax;
+    private int indexMin;
 
-    public static List<String> readFile(final String fileName, final String separator) {
+    public List<WeatherData> parseCsvFile(final String fileName, final String separator,
+                                          final String criterion, final String max, final String min) {
+        List<WeatherData> dataObjectsFromFile = new ArrayList<>();
 
+        //read file
         File file = new File(fileName);
-        List<String> fileContent = new ArrayList<>();
-
         if (!file.canRead() || !file.isFile()) {
-            System.out.println("Übergebene Datei " + fileName + " ist keine Datei oder schreibgeschützt." +
-                    "Programm wird abggebrochen.");
+            System.out.println("File '" + fileName + "' can not be accessed. Exit programming challenge.");
             System.exit(0);
         }
 
+        //use buffered reader to get access to file content
         FileReader fileReader;
         BufferedReader bufferedReader = null;
         try {
             fileReader = new FileReader(fileName);
             bufferedReader = new BufferedReader(fileReader);
 
-            String zeile;
-            while ((zeile = bufferedReader.readLine()) != null) {
-                System.out.println("Gelesene Zeile: " + zeile);
-                //ganze zeile hinzufuegen, mit kommas (oder was als separator definiert wurde)
-                fileContent.add(zeile);
+            String line;
+            int i = 0;
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] dataItems = line.split(separator);
+
+                //first get the index of the properties we want to know
+                if (i == 0) {
+                    //if parameters are not found, exit program
+                    if (!determineIndices(dataItems, criterion, max, min)) {
+                        System.out.println("At least one parameter (" + criterion + ", "
+                                + max + ", " + min + ") not found. Exit programming challenge.");
+                        System.exit(0);
+                    }
+                } else {
+                    dataObjectsFromFile.add(new WeatherData(Integer.parseInt(dataItems[indexCriterion]),
+                            Integer.parseInt(dataItems[indexMax]),
+                            Integer.parseInt(dataItems[indexMin])));
+                }
+                i++;
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("unerwartete IO Exception, Programm wird beendet.");
+            System.out.println("Unexpected IO Exception. Exit programming challenge.");
             System.exit(0);
         } finally {
             if (bufferedReader != null)
@@ -48,9 +64,39 @@ public class CSVFileReader {
                     bufferedReader.close();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.out.println("bufferedReader konnte nicht geschlossen werden!");
+                    System.out.println("Can not close bufferedReader");
                 }
         }
-        return fileContent;
+        return dataObjectsFromFile;
     }
+
+    boolean determineIndices(String[] dataItems, String criterion, String max, String min) {
+        int check = 0;
+        for (int i = 0; i < dataItems.length; i++) {
+            if (dataItems[i].equals(criterion)) {
+                indexCriterion = i;
+                check++;
+            }
+            if (dataItems[i].equals(max)) {
+                indexMax = i;
+                check++;
+            }
+            if (dataItems[i].equals(min)) {
+                indexMin = i;
+                check++;
+            }
+        }
+        //all three parameters must be found! otherwise, no guarantee for correct values later
+        if (check == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //for testing purpose only
+    int getIndexMax() {
+        return this.indexMax;
+    }
+
 }
