@@ -18,14 +18,14 @@ public class MathUtilsTest {
     public void setUp() throws Exception {
         list = new ArrayList<>();
         list.add(new FileData(0, "1", 25, 15));
-        list.add(new FileData(1, "2", 25, 14));
+        list.add(new FileData(1, "2", 23, 24));
         list.add(new FileData(2, "3", 20, 5));
         list.add(new FileData(3, "4", 35, 30));
     }
 
     @Test
     public void findLowestDiff() {
-        assertEquals("4", MathUtils.getQualifierWithLowestDiff(list));
+        assertEquals("2", MathUtils.getQualifierWithLowestDiff(list));
     }
 
     @Test

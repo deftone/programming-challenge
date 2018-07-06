@@ -18,7 +18,7 @@ public class MathUtils {
             int newDiff, index = -1;
 
             for (FileData data : list) {
-                newDiff = data.getComparator1() - data.getComparator2();
+                newDiff = Math.abs(data.getComparator1() - data.getComparator2());
                 if (newDiff < lowestDiff) {
                     lowestDiff = newDiff;
                     index = data.getId();
