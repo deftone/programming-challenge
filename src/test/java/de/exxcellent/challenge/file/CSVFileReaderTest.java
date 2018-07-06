@@ -6,14 +6,18 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static de.exxcellent.challenge.file.CSVFileReader.FILE_NOT_FOUND_EXCEPTION;
+import static de.exxcellent.challenge.file.CSVFileReader.IDENTIFIER_NOT_FOUND_EXCEPTION;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  * Created by deftone on 05.07.18.
  */
 public class CSVFileReaderTest {
 
-    private final static String WORKING_FILE = "/home/deftone/JAVA/programming-challenge/src/main/resources/de/exxcellent/challenge/weather.csv";
+    private final static String WORKING_FILE = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    private final static String NO_FILE = "noFileHere.txt";
     private final static String CSV_SEPERATOR = ",";
 
     private final static String one = "one";
@@ -21,6 +25,7 @@ public class CSVFileReaderTest {
     private final static String three = "three";
     private final static String four = "four";
     private final static String five = "five";
+    private final static String FIVE = "FIVE";
     private final static String[] dataItems = {one, two, three, four, five};
     private CSVFileReader reader;
 
@@ -31,7 +36,8 @@ public class CSVFileReaderTest {
 
     @Test
     public void determineIndicesSuccess() {
-        assertEquals(true, reader.determineIndices(dataItems, one, five, three));
+        //case insenstive!
+        assertEquals(true, reader.determineIndices(dataItems, one, FIVE, three));
         assertEquals(4, reader.getIndexComparator1());
     }
 
@@ -42,7 +48,7 @@ public class CSVFileReaderTest {
     }
 
     @Test
-    public void parseCSVFileSuccess() {
+    public void parseCSVFileSuccess() throws FileException, IdentifierNotFoundException {
         List<FileData> dataObjectsFromFile = reader.parseCsvFile(WORKING_FILE, CSV_SEPERATOR,
                 "Day", "MxT", "MnT");
         assertEquals(30, dataObjectsFromFile.size());
@@ -56,4 +62,27 @@ public class CSVFileReaderTest {
         assertEquals(dataObjectsFromFile.get(29).getComparator2(), 45);
     }
 
+    @Test
+    public void parseCSVFileFileNotFound() throws IdentifierNotFoundException{
+        try {
+            reader.parseCsvFile(NO_FILE, CSV_SEPERATOR,
+                    "Day", "MxT", "MnT");
+            fail("Expected an FileException to be thrown");
+        } catch (FileException exception) {
+            String expectedMessage = String.format(FILE_NOT_FOUND_EXCEPTION, NO_FILE);
+            assertEquals(expectedMessage, exception.getMessage());
+        }
+    }
+
+    @Test
+    public void parseCSVFileIdentifierNotFound() throws FileException{
+        try{
+            reader.parseCsvFile(WORKING_FILE, CSV_SEPERATOR,
+                    "Does", "NOT", "Exist");
+            fail("Excepted an IdentifierNotFoundException to be thrown");
+        } catch (IdentifierNotFoundException exception){
+            String expectedMessage = String.format(IDENTIFIER_NOT_FOUND_EXCEPTION, "Does", "NOT", "Exist");
+            assertEquals(expectedMessage, exception.getMessage());
+        }
+    }
 }
