@@ -10,11 +10,8 @@ import java.util.ArrayList;
  * Created by deftone on 04.07.18.
  */
 public class App {
-
-    //todo: use relative path so it will work on other laptops aswell! but relative path does not work :(
-    //private final static String FILE_WEATHER = "de/exxcellent/challenge/weather.csv";
-    private final static String FILE_WEATHER = "/home/deftone/JAVA/programming-challenge/src/main/resources/de/exxcellent/challenge/weather.csv";
-    private final static String FILE_FOOTBALL = "/home/deftone/JAVA/programming-challenge/src/main/resources/de/exxcellent/challenge/football.csv";
+    private final static String FILE_WEATHER = "src/main/resources/de/exxcellent/challenge/weather.csv";
+    private final static String FILE_FOOTBALL = "src/main/resources/de/exxcellent/challenge/football.csv";
     private final static String CSV_SEPERATOR = ",";
 
     public static void main(String... args) {
