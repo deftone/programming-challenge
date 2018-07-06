@@ -1,5 +1,8 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.reader;
 
+import de.exxcellent.challenge.file.exceptions.FileException;
+import de.exxcellent.challenge.file.exceptions.IdentifierNotFoundException;
+import de.exxcellent.challenge.file.reader.IFileReader;
 import de.exxcellent.challenge.model.FileData;
 
 import java.io.BufferedReader;
@@ -13,16 +16,16 @@ import java.util.ArrayList;
  * <p>
  * reads a csv file and returns a list of data objects
  */
-public class CSVFileReader {
+public class CSVFileReader implements IFileReader {
     private int indexQualifier;
     private int indexComparator1;
     private int indexComparator2;
-    final static String FILE_NOT_FOUND_EXCEPTION = "File '%s' can not be accessed. \n " +
-            "Please check path and readability";
+    private final static String CSV_SEPERATOR = ",";
+    final static String FILE_NOT_FOUND_EXCEPTION = "File '%s' can not be accessed. \nPlease check path and readability";
     final static String IDENTIFIER_NOT_FOUND_EXCEPTION = "At least one of the parameters '%s', '%s' and '%s' was not found.";
 
-    public ArrayList<FileData> parseCsvFile(final String fileName, final String separator,
-                                            final String qualifier, final String comparator1,
+    @Override
+    public ArrayList<FileData> parseFile(final String fileName, final String qualifier, final String comparator1,
                                             final String comparator2) throws FileException, IdentifierNotFoundException {
         ArrayList<FileData> dataObjectsFromFile = new ArrayList<>();
 
@@ -42,7 +45,7 @@ public class CSVFileReader {
             String line;
             int i = -1;
             while ((line = bufferedReader.readLine()) != null) {
-                String[] dataItems = line.split(separator);
+                String[] dataItems = line.split(CSV_SEPERATOR);
 
                 //first get the index of the properties we want to know
                 if (i == -1) {
@@ -75,7 +78,9 @@ public class CSVFileReader {
         return dataObjectsFromFile;
     }
 
-    /** there are two possibilities: case sensitive comparison or not. i chose the latter**/
+    /**
+     * there are two possibilities: case sensitive comparison or not. i chose the latter
+     **/
     boolean determineIndices(String[] dataItems, String qualifier, String comparator1, String comparator2) {
         int check = 0;
         for (int i = 0; i < dataItems.length; i++) {

@@ -1,4 +1,4 @@
-package de.exxcellent.challenge.file;
+package de.exxcellent.challenge.file.exceptions;
 
 /**
  * Created by deftone on 06.07.18.

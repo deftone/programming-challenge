@@ -1,8 +1,10 @@
 package de.exxcellent.challenge.main;
 
-import de.exxcellent.challenge.file.CSVFileReader;
-import de.exxcellent.challenge.file.FileException;
-import de.exxcellent.challenge.file.IdentifierNotFoundException;
+import de.exxcellent.challenge.file.*;
+import de.exxcellent.challenge.file.exceptions.FileException;
+import de.exxcellent.challenge.file.exceptions.FileTypeNotSupportedException;
+import de.exxcellent.challenge.file.exceptions.IdentifierNotFoundException;
+import de.exxcellent.challenge.file.reader.IFileReader;
 import de.exxcellent.challenge.math.MathUtils;
 import de.exxcellent.challenge.model.FileData;
 
@@ -14,16 +16,17 @@ import java.util.ArrayList;
 public class App {
     private final static String FILE_WEATHER = "src/main/resources/de/exxcellent/challenge/weather.csv";
     private final static String FILE_FOOTBALL = "src/main/resources/de/exxcellent/challenge/football.csv";
-    private final static String CSV_SEPERATOR = ",";
 
     public static void main(String... args) {
+        //get correct filereader depending on datafile (csv, json)
+        FileReaderFactory fileReaderFactory = new FileReaderFactory();
 
         /** Weather Challenge **/
-        //Read data from the file
-        CSVFileReader reader = new CSVFileReader();
-        ArrayList<FileData> weatherDataList = null;
         try {
-            weatherDataList = reader.parseCsvFile(FILE_WEATHER, CSV_SEPERATOR,
+            //Read data from the file
+            IFileReader reader = fileReaderFactory.getFileReader(FILE_WEATHER);
+
+            ArrayList<FileData> weatherDataList = reader.parseFile(FILE_WEATHER,
                     "Day", "MxT", "MnT");
 
             //Determine day with lowest and highest temperature difference
@@ -33,16 +36,17 @@ public class App {
             System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
             System.out.printf("Day with biggest  temperature spread : %s%n", dayWithBiggestTempSpread);
 
-        } catch (FileException | IdentifierNotFoundException e) {
+        } catch (FileException | IdentifierNotFoundException | FileTypeNotSupportedException e) {
             e.printStackTrace();
         }
 
 
         /** Football Challenge **/
-
-        ArrayList<FileData> footballDataList = null;
         try {
-            footballDataList = reader.parseCsvFile(FILE_FOOTBALL, CSV_SEPERATOR,
+            //Read data from the file
+            IFileReader reader = fileReaderFactory.getFileReader(FILE_FOOTBALL);
+
+            ArrayList<FileData> footballDataList = reader.parseFile(FILE_FOOTBALL,
                     "Team", "Goals", "Goals Allowed");
             //Determine best and worst (?) team
             String teamWithSmallestGoalSpread = MathUtils.getQualifierWithLowestDiff(footballDataList);
@@ -50,10 +54,9 @@ public class App {
 
             System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
             System.out.printf("Team with biggest  goal spread       : %s%n", teamWithBiggestGoalSpread);
-        } catch (FileException | IdentifierNotFoundException e) {
+        } catch (FileException | IdentifierNotFoundException | FileTypeNotSupportedException e) {
             e.printStackTrace();
         }
-
     }
 }
 
