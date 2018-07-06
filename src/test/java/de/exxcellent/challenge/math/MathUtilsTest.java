@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.math;
 
-import de.exxcellent.challenge.model.WeatherData;
+import de.exxcellent.challenge.model.FileData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,44 +12,44 @@ import static org.junit.Assert.*;
  * Created by deftone on 04.07.18.
  */
 public class MathUtilsTest {
-    private ArrayList<WeatherData> list;
+    private ArrayList<FileData> list;
 
     @Before
     public void setUp() throws Exception {
         list = new ArrayList<>();
-        list.add(new WeatherData(1, 25, 15));
-        list.add(new WeatherData(2, 25, 14));
-        list.add(new WeatherData(3, 20, 5));
-        list.add(new WeatherData(4, 35, 30));
+        list.add(new FileData(0, "1", 25, 15));
+        list.add(new FileData(1, "2", 25, 14));
+        list.add(new FileData(2, "3", 20, 5));
+        list.add(new FileData(3, "4", 35, 30));
     }
 
     @Test
-    public void findLowestDiff(){
-        assertEquals(4, MathUtils.findLowestDiff(list));
+    public void findLowestDiff() {
+        assertEquals("4", MathUtils.getQualifierWithLowestDiff(list));
     }
 
     @Test
-    public void findLowestDiff_nullCheck(){
-        assertEquals(-1, MathUtils.findLowestDiff(null));
+    public void findLowestDiff_nullCheck() {
+        assertEquals("", MathUtils.getQualifierWithLowestDiff(null));
     }
 
     @Test
-    public void findLowestDiff_emptyList(){
-        assertEquals(-1, MathUtils.findLowestDiff(new ArrayList<>()));
+    public void findLowestDiff_emptyList() {
+        assertEquals("", MathUtils.getQualifierWithLowestDiff(new ArrayList<>()));
     }
 
     @Test
-    public void findHighestDiff(){
-        assertEquals(3, MathUtils.findHighestDiff(list));
+    public void findHighestDiff() {
+        assertEquals("3", MathUtils.getQualifierHighestDiff(list));
     }
 
     @Test
-    public void findHighetsDiff_nullCheck(){
-        assertEquals(-1, MathUtils.findHighestDiff(null));
+    public void findHighetsDiff_nullCheck() {
+        assertEquals("", MathUtils.getQualifierHighestDiff(null));
     }
 
     @Test
-    public void findHighetsDiff_emptyList(){
-        assertEquals(-1, MathUtils.findHighestDiff(new ArrayList<>()));
+    public void findHighetsDiff_emptyList() {
+        assertEquals("", MathUtils.getQualifierHighestDiff(new ArrayList<>()));
     }
 }

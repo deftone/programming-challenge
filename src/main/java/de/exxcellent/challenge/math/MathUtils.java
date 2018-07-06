@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.math;
 
-import de.exxcellent.challenge.model.WeatherData;
+import de.exxcellent.challenge.model.FileData;
 
 import java.util.ArrayList;
 
@@ -12,37 +12,37 @@ import java.util.ArrayList;
  */
 public class MathUtils {
 
-    public static int findLowestDiff(ArrayList<WeatherData> list) {
+    public static String getQualifierWithLowestDiff(ArrayList<FileData> list) {
         if (list != null && list.size() > 0) {
             int lowestDiff = Integer.MAX_VALUE;
             int newDiff, index = -1;
 
-            for (WeatherData data : list) {
-                newDiff = data.getMaxTemperature() - data.getMinTemperature();
+            for (FileData data : list) {
+                newDiff = data.getComparator1() - data.getComparator2();
                 if (newDiff < lowestDiff) {
                     lowestDiff = newDiff;
-                    index = data.getDay();
+                    index = data.getId();
                 }
             }
-            return index;
+            return list.get(index).getQualifier();
         }
-        return -1;
+        return "";
     }
 
-    public static int findHighestDiff(ArrayList<WeatherData> list) {
+    public static String getQualifierHighestDiff(ArrayList<FileData> list) {
         if (list != null && list.size() > 0) {
             int highestDiff = 0;
             int newDiff, index = -1;
 
-            for (WeatherData data : list) {
-                newDiff = data.getMaxTemperature() - data.getMinTemperature();
+            for (FileData data : list) {
+                newDiff = data.getComparator1() - data.getComparator2();
                 if (newDiff > highestDiff) {
                     highestDiff = newDiff;
-                    index = data.getDay();
+                    index = data.getId();
                 }
             }
-            return index;
+            return list.get(index).getQualifier();
         }
-        return -1;
+        return "";
     }
 }

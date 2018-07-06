@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.file;
 
-import de.exxcellent.challenge.model.WeatherData;
+import de.exxcellent.challenge.model.FileData;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,13 +14,13 @@ import java.util.ArrayList;
  * reads a csv file and returns a list of data objects
  */
 public class CSVFileReader {
-    private int indexCriterion;
-    private int indexMax;
-    private int indexMin;
+    private int indexQualifier;
+    private int indexComparator1;
+    private int indexComparator2;
 
-    public ArrayList<WeatherData> parseCsvFile(final String fileName, final String separator,
-                                          final String criterion, final String max, final String min) {
-        ArrayList<WeatherData> dataObjectsFromFile = new ArrayList<>();
+    public ArrayList<FileData> parseCsvFile(final String fileName, final String separator,
+                                            final String qualifier, final String comparator1, final String comparator2) {
+        ArrayList<FileData> dataObjectsFromFile = new ArrayList<>();
 
         //read file
         File file = new File(fileName);
@@ -37,22 +37,23 @@ public class CSVFileReader {
             bufferedReader = new BufferedReader(fileReader);
 
             String line;
-            int i = 0;
+            int i = -1;
             while ((line = bufferedReader.readLine()) != null) {
                 String[] dataItems = line.split(separator);
 
                 //first get the index of the properties we want to know
-                if (i == 0) {
+                if (i == -1) {
                     //if parameters are not found, exit program
-                    if (!determineIndices(dataItems, criterion, max, min)) {
-                        System.out.println("At least one parameter (" + criterion + ", "
-                                + max + ", " + min + ") not found. Exit programming challenge.");
+                    if (!determineIndices(dataItems, qualifier, comparator1, comparator2)) {
+                        System.out.println("At least one parameter (" + qualifier + ", "
+                                + comparator1 + ", " + comparator2 + ") not found. Exit programming challenge.");
                         System.exit(0);
                     }
                 } else {
-                    dataObjectsFromFile.add(new WeatherData(Integer.parseInt(dataItems[indexCriterion]),
-                            Integer.parseInt(dataItems[indexMax]),
-                            Integer.parseInt(dataItems[indexMin])));
+                    dataObjectsFromFile.add(new FileData(i,
+                            dataItems[indexQualifier],
+                            Integer.parseInt(dataItems[indexComparator1]),
+                            Integer.parseInt(dataItems[indexComparator2])));
                 }
                 i++;
             }
@@ -72,19 +73,19 @@ public class CSVFileReader {
         return dataObjectsFromFile;
     }
 
-    boolean determineIndices(String[] dataItems, String criterion, String max, String min) {
+    boolean determineIndices(String[] dataItems, String qualifier, String comparator1, String comparator2) {
         int check = 0;
         for (int i = 0; i < dataItems.length; i++) {
-            if (dataItems[i].equals(criterion)) {
-                indexCriterion = i;
+            if (dataItems[i].equals(qualifier)) {
+                indexQualifier = i;
                 check++;
             }
-            if (dataItems[i].equals(max)) {
-                indexMax = i;
+            if (dataItems[i].equals(comparator1)) {
+                indexComparator1 = i;
                 check++;
             }
-            if (dataItems[i].equals(min)) {
-                indexMin = i;
+            if (dataItems[i].equals(comparator2)) {
+                indexComparator2 = i;
                 check++;
             }
         }
@@ -97,8 +98,8 @@ public class CSVFileReader {
     }
 
     //for testing purpose only
-    int getIndexMax() {
-        return this.indexMax;
+    int getIndexComparator1() {
+        return this.indexComparator1;
     }
 
 }

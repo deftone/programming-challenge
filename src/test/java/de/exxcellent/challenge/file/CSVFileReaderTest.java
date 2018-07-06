@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.file;
 
-import de.exxcellent.challenge.model.WeatherData;
+import de.exxcellent.challenge.model.FileData;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,28 +32,28 @@ public class CSVFileReaderTest {
     @Test
     public void determineIndicesSuccess() {
         assertEquals(true, reader.determineIndices(dataItems, one, five, three));
-        assertEquals(4, reader.getIndexMax());
+        assertEquals(4, reader.getIndexComparator1());
     }
 
     @Test
     public void determineIndicesFailure() {
         assertEquals(false, reader.determineIndices(dataItems, "xxx", two, four));
-        assertEquals(1, reader.getIndexMax());
+        assertEquals(1, reader.getIndexComparator1());
     }
 
     @Test
     public void parseCSVFileSuccess() {
-        List<WeatherData> dataObjectsFromFile = reader.parseCsvFile(WORKING_FILE, CSV_SEPERATOR,
+        List<FileData> dataObjectsFromFile = reader.parseCsvFile(WORKING_FILE, CSV_SEPERATOR,
                 "Day", "MxT", "MnT");
         assertEquals(30, dataObjectsFromFile.size());
         //file: 1,88,59, ... first line
-        assertEquals(dataObjectsFromFile.get(0).getDay(), 1);
-        assertEquals(dataObjectsFromFile.get(0).getMaxTemperature(), 88);
-        assertEquals(dataObjectsFromFile.get(0).getMinTemperature(), 59);
+        assertEquals(dataObjectsFromFile.get(0).getQualifier(), "1");
+        assertEquals(dataObjectsFromFile.get(0).getComparator1(), 88);
+        assertEquals(dataObjectsFromFile.get(0).getComparator2(), 59);
         //file: 30,90,45,6, ... last line
-        assertEquals(dataObjectsFromFile.get(29).getDay(), 30);
-        assertEquals(dataObjectsFromFile.get(29).getMaxTemperature(), 90);
-        assertEquals(dataObjectsFromFile.get(29).getMinTemperature(), 45);
+        assertEquals(dataObjectsFromFile.get(29).getQualifier(), "30");
+        assertEquals(dataObjectsFromFile.get(29).getComparator1(), 90);
+        assertEquals(dataObjectsFromFile.get(29).getComparator2(), 45);
     }
 
 }
