@@ -11,8 +11,8 @@ import de.exxcellent.challenge.model.FileData;
 import java.util.List;
 
 /**
- * Created by deftone on 04.07.18.
- */
+ * main method for starting the challenge programming app
+ * **/
 public class App {
     private final static String FILE_WEATHER = "src/main/resources/de/exxcellent/challenge/weather.csv";
     private final static String FILE_FOOTBALL = "src/main/resources/de/exxcellent/challenge/football.csv";
@@ -31,7 +31,7 @@ public class App {
 
             //Determine day with lowest and highest temperature difference
             String dayWithSmallestTempSpread = MathUtils.getQualifierWithLowestDiff(weatherDataList);
-            String dayWithBiggestTempSpread = MathUtils.getQualifierHighestDiff(weatherDataList);
+            String dayWithBiggestTempSpread = MathUtils.getQualifierLargestDiff(weatherDataList);
 
             System.out.printf("Day with smallest temperature spread : %s%n", dayWithSmallestTempSpread);
             System.out.printf("Day with biggest  temperature spread : %s%n", dayWithBiggestTempSpread);
@@ -50,7 +50,7 @@ public class App {
                     "Team", "Goals", "Goals Allowed");
             //Determine best and worst (?) team
             String teamWithSmallestGoalSpread = MathUtils.getQualifierWithLowestDiff(footballDataList);
-            String teamWithBiggestGoalSpread = MathUtils.getQualifierHighestDiff(footballDataList);
+            String teamWithBiggestGoalSpread = MathUtils.getQualifierLargestDiff(footballDataList);
 
             System.out.printf("Team with smallest goal spread       : %s%n", teamWithSmallestGoalSpread);
             System.out.printf("Team with biggest  goal spread       : %s%n", teamWithBiggestGoalSpread);

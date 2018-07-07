@@ -1,7 +1,7 @@
 package de.exxcellent.challenge.file.exceptions;
 
 /**
- * Created by deftone on 06.07.18.
+ * Exception if not all three parameters are found in the file.
  */
 public class IdentifierNotFoundException extends Throwable {
     private String exceptionMessage;

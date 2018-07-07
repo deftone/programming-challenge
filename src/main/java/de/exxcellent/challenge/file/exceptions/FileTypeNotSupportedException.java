@@ -1,7 +1,7 @@
 package de.exxcellent.challenge.file.exceptions;
 
 /**
- * Created by deftone on 06.07.18.
+ * Exception if the file type is not supported.
  */
 public class FileTypeNotSupportedException extends Throwable {
     private String exceptionMessage;

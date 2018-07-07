@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by deftone on 06.07.18.
+ * (just for demonstrating the factory/strategy pattern an empty json reader)
  */
 public class JSONFileReader implements IFileReader {
     @Override

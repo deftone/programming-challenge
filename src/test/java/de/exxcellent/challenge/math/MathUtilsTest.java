@@ -40,16 +40,16 @@ public class MathUtilsTest {
 
     @Test
     public void findHighestDiff() {
-        assertEquals("3", MathUtils.getQualifierHighestDiff(list));
+        assertEquals("3", MathUtils.getQualifierLargestDiff(list));
     }
 
     @Test
     public void findHighetsDiff_nullCheck() {
-        assertEquals("", MathUtils.getQualifierHighestDiff(null));
+        assertEquals("", MathUtils.getQualifierLargestDiff(null));
     }
 
     @Test
     public void findHighetsDiff_emptyList() {
-        assertEquals("", MathUtils.getQualifierHighestDiff(new ArrayList<>()));
+        assertEquals("", MathUtils.getQualifierLargestDiff(new ArrayList<>()));
     }
 }

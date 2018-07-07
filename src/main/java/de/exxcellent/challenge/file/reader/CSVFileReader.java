@@ -12,9 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by deftone on 04.07.18.
- * <p>
- * reads a csv file and returns a list of data objects
+ * CSVFileReader implements the interface IFileReader for reading and parsing csv files.
  */
 public class CSVFileReader implements IFileReader {
     private int indexQualifier;
@@ -24,6 +22,17 @@ public class CSVFileReader implements IFileReader {
     final static String FILE_NOT_FOUND_EXCEPTION = "File '%s' can not be accessed. \nPlease check path and readability";
     final static String IDENTIFIER_NOT_FOUND_EXCEPTION = "At least one of the parameters '%s', '%s' and '%s' was not found.";
 
+    /**
+     * This method reads a csv file and parses the content of that file for the vales of the desired paramters.
+     * If the file can not be read (found/opened) an exception is thrown.
+     * If the desired parameters can not be found in the first line of the file content, an exception is thrown.
+     *
+     * @param fileName      name of that file
+     * @param qualifier     name of qualifier (first desired parameter, e.g. "team")
+     * @param comparator1   name of first comparator (second desired parameter, e.g. "goals")
+     * @param comparator2   name of second comparator (third desired parameter, e.g. "goals allowed")
+     * @return              an array list that contains objects of the values of these desired parameters
+     * **/
     @Override
     public List<FileData> parseFile(final String fileName, final String qualifier, final String comparator1,
                                     final String comparator2) throws FileException, IdentifierNotFoundException {
@@ -79,7 +88,15 @@ public class CSVFileReader implements IFileReader {
     }
 
     /**
-     * there are two possibilities: case sensitive comparison or not. i chose the latter
+     * This method determines the indices of the desired parameters in the first line of the file content.
+     * All three must be found to guarantee correct behaviour later on.
+     * There are two possibilities: case sensitive or case insensitive comparison. This method implements the latter.
+     *
+     * @param dataItems     array of Strings contained in the first line of the file
+     * @param qualifier     first desired parameter
+     * @param comparator1   second desired parameter
+     * @param comparator2   third desired parameter
+     * @return              true if all three parameters are found - otherwise false
      **/
     boolean determineIndices(String[] dataItems, String qualifier, String comparator1, String comparator2) {
         int check = 0;
