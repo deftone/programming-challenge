@@ -2,7 +2,7 @@ package de.exxcellent.challenge.math;
 
 import de.exxcellent.challenge.model.FileData;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by deftone on 04.07.18.
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 public class MathUtils {
 
-    public static String getQualifierWithLowestDiff(ArrayList<FileData> list) {
+    public static String getQualifierWithLowestDiff(List<FileData> list) {
         if (list != null && list.size() > 0) {
             int lowestDiff = Integer.MAX_VALUE;
             int newDiff, index = -1;
@@ -29,7 +29,7 @@ public class MathUtils {
         return "";
     }
 
-    public static String getQualifierHighestDiff(ArrayList<FileData> list) {
+    public static String getQualifierHighestDiff(List<FileData> list) {
         if (list != null && list.size() > 0) {
             int highestDiff = 0;
             int newDiff, index = -1;

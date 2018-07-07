@@ -2,7 +2,6 @@ package de.exxcellent.challenge.file.reader;
 
 import de.exxcellent.challenge.file.exceptions.FileException;
 import de.exxcellent.challenge.file.exceptions.IdentifierNotFoundException;
-import de.exxcellent.challenge.file.reader.IFileReader;
 import de.exxcellent.challenge.model.FileData;
 
 import java.io.BufferedReader;
@@ -10,6 +9,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by deftone on 04.07.18.
@@ -25,9 +25,9 @@ public class CSVFileReader implements IFileReader {
     final static String IDENTIFIER_NOT_FOUND_EXCEPTION = "At least one of the parameters '%s', '%s' and '%s' was not found.";
 
     @Override
-    public ArrayList<FileData> parseFile(final String fileName, final String qualifier, final String comparator1,
-                                            final String comparator2) throws FileException, IdentifierNotFoundException {
-        ArrayList<FileData> dataObjectsFromFile = new ArrayList<>();
+    public List<FileData> parseFile(final String fileName, final String qualifier, final String comparator1,
+                                    final String comparator2) throws FileException, IdentifierNotFoundException {
+        List<FileData> dataObjectsFromFile = new ArrayList<>();
 
         //read file
         File file = new File(fileName);
@@ -98,11 +98,7 @@ public class CSVFileReader implements IFileReader {
             }
         }
         //all three parameters must be found! otherwise, no guarantee for correct values later
-        if (check == 3) {
-            return true;
-        } else {
-            return false;
-        }
+        return (check == 3);
     }
 
     //for testing purpose only

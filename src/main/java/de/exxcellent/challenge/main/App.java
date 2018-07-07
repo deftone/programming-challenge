@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.main;
 
-import de.exxcellent.challenge.file.*;
+import de.exxcellent.challenge.file.FileReaderFactory;
 import de.exxcellent.challenge.file.exceptions.FileException;
 import de.exxcellent.challenge.file.exceptions.FileTypeNotSupportedException;
 import de.exxcellent.challenge.file.exceptions.IdentifierNotFoundException;
@@ -8,7 +8,7 @@ import de.exxcellent.challenge.file.reader.IFileReader;
 import de.exxcellent.challenge.math.MathUtils;
 import de.exxcellent.challenge.model.FileData;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by deftone on 04.07.18.
@@ -26,7 +26,7 @@ public class App {
             //Read data from the file
             IFileReader reader = fileReaderFactory.getFileReader(FILE_WEATHER);
 
-            ArrayList<FileData> weatherDataList = reader.parseFile(FILE_WEATHER,
+            List<FileData> weatherDataList = reader.parseFile(FILE_WEATHER,
                     "Day", "MxT", "MnT");
 
             //Determine day with lowest and highest temperature difference
@@ -46,7 +46,7 @@ public class App {
             //Read data from the file
             IFileReader reader = fileReaderFactory.getFileReader(FILE_FOOTBALL);
 
-            ArrayList<FileData> footballDataList = reader.parseFile(FILE_FOOTBALL,
+            List<FileData> footballDataList = reader.parseFile(FILE_FOOTBALL,
                     "Team", "Goals", "Goals Allowed");
             //Determine best and worst (?) team
             String teamWithSmallestGoalSpread = MathUtils.getQualifierWithLowestDiff(footballDataList);
