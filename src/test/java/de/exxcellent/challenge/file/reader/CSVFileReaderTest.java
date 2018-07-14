@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static de.exxcellent.challenge.file.reader.CSVFileReader.FILE_NOT_FOUND_EXCEPTION;
-import static de.exxcellent.challenge.file.reader.CSVFileReader.IDENTIFIER_NOT_FOUND_EXCEPTION;
+import static de.exxcellent.challenge.model.Constants.FILE_NOT_FOUND_EXCEPTION;
+import static de.exxcellent.challenge.model.Constants.IDENTIFIER_NOT_FOUND_EXCEPTION;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -38,8 +38,14 @@ public class CSVFileReaderTest{
     @Test
     public void determineIndicesSuccess() {
         //case insenstive!
-        assertEquals(true, reader.determineIndices(dataItems, one, FIVE, three));
+        assertEquals(true, reader.determineIndices(dataItems, one, five, three));
         assertEquals(4, reader.getIndexComparator1());
+    }
+
+    @Test
+    public void determineIndicesFailureCaseSensitive() {
+        //case insenstive!
+        assertEquals(false, reader.determineIndices(dataItems, one, FIVE, three));
     }
 
     @Test

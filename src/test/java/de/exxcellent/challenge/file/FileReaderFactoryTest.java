@@ -1,6 +1,6 @@
 package de.exxcellent.challenge.file;
 
-import static de.exxcellent.challenge.file.FileReaderFactory.FILE_TYPE_NOT_SUPPORTED;
+import static de.exxcellent.challenge.model.Constants.FILE_TYPE_NOT_SUPPORTED;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
